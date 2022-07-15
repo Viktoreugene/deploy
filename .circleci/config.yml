@@ -27,7 +27,8 @@ jobs:
       - image: circleci/python:3.6.2
     steps:
       - checkout
-      - add_ssh_keys: fingerprints:["8c:8c:8f:68:ca:9d:26:68:3b:47:ee:52:e5:bc:72:8f"]
+      - add_ssh_keys:
+          fingerprints: ["8c:8c:8f:68:ca:9d:26:68:3b:47:ee:52:e5:bc:72:8f"]
 
       - run:
           name: Install Ansible
