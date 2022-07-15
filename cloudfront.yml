@@ -1,8 +1,7 @@
 Parameters:
-
-PipelineID:
-  Description: Existing Bucket Name
-  Type: String
+  PipelineID:
+    Description: Existing Bucket Name
+    Type: String
 
 Resources:
   CloudFrontOriginAccessIdentity:
@@ -15,19 +14,19 @@ Resources:
     Type: "AWS::CloudFront::Distribution"
     Properties:
       DistributionConfig:
-        CloudFrontOriginAccessIdentity:
-          Origins: 
-            - DomainName: !Sub "${PipelineID}.s3.amazonaws"
-              Id: webpage
-              S3OriginConfig:
-                OriginAccessIdentity: !Sub "origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}"
-          Enabled: true
-          DefaultRootObject: index.html
-          DefaultCacheBehavior:
-            ForwardedValues:
-              QueryString: false
-            TargetOriginId: webpage
-            ViewerProtocoPolicy: allow-all
+        Origins: 
+          - DomainName: !Sub "${PipelineID}.s3.amazonaws"
+            Id: webpage
+            S3OriginConfig:
+              OriginAccessIdentity: !Sub "origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}"
+        Enabled: true
+        DefaultRootObject: index.html
+        DefaultCacheBehavior:
+          ForwardedValues:
+            QueryString: false
+          TargetOriginId: webpage
+          ViewerProtocolPolicy: allow-all
+        
 
 Outputs:
   PipelineID:
