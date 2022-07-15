@@ -65,7 +65,7 @@ jobs:
       - run:
           name: Test job
           command: |
-            curl -s --head "https://google.com"
+            return 1
         
       - destroy_environment
         
