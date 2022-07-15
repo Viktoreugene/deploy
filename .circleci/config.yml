@@ -57,6 +57,37 @@ jobs:
   #         name: Run Playbook and configure server
   #         command: |
   #           ansible-playbook -i inventory main-remote.yml
+  create_and_deploy_front_end:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: Execute bucket.yml - Create Cloudfromation Stack
+          command: |
+            aws cloudformation deploy \
+              --template-file bucket.yml \
+              --stack-name stack-create-bucket-${CIRCLE_WORKFLOW_ID:0:7} \
+              --parameter-overrides myBucketName="my-bucket-${CIRCLE_WORKFLOW_ID:0:7}"
+      - run: aws s3 sync . s3://my-bucket-${CIRCLE_WORKFLOW_ID:0:7} --delete
+
+  get_last_deployment_id:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run: yum install -y tar gzip
+      - run:
+          name: Fetch and save the old pipeline id (bucket name) responsible for the last release
+          command: |
+              aws cloudformation \
+              list-exports --query "Exports[?Name==\'PipelineID\'].Value" \
+              --no-paginate --output text > ~/textfile.txt
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - textfile.txt
+
 
   smoke_test:
     docker:
