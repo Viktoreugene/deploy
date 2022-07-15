@@ -21,6 +21,12 @@ jobs:
               --template-file template.yml \
               --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5} \
               --region us-east-1
+      
+      - run:
+          name: Write to a file
+          command: |
+            aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' \
+            --output text >> inventory
 
   configure_infrastructure:
     docker:
