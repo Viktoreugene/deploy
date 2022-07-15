@@ -32,6 +32,9 @@ jobs:
 
       - run:
           name: Install Ansible
+          become: true
+          become_method: sudo
+          become_path: root
           command: |
             apt-get install ansible
 
