@@ -49,7 +49,7 @@ jobs:
   #         command: |
   #           ansible-playbook -i inventory main-remote.yml
 
-  smoker_test:
+  smoke_test:
     docker:
       - image: alpine:latest
     steps:
