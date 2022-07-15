@@ -7,7 +7,6 @@ commands:
     steps:
       - run:
           name: Destroy environment
-          when: on_fail
           command: |
             aws cloudformation delete-stack --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:7}
 
@@ -65,9 +64,9 @@ jobs:
       - run:
           name: Test job
           command: |
-            return 1
-      - destroy_environment
-
+            curl -s --head "https://google.com"
+      - destroy_environment:
+          when: on_fail
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
