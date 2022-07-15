@@ -1,6 +1,6 @@
 ---
 - name: Exercise for setting up a web server in EC@
-  hosts: 100.26.190.105
+  hosts: all
   user: ubuntu
   roles:
     - setup
